@@ -1,5 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.IO;
+using System.Threading;
+using SimpleJSON;
+using System.Text;
+using System.ComponentModel;
 
 public class Controls : MonoBehaviour {
 
@@ -7,11 +12,17 @@ public class Controls : MonoBehaviour {
 
 	private Vector2 lastFingerPosition = new Vector2 ();
 
+	public delegate void dInstantiate (GameObject g);
+	
 	// Use this for initialization
 	void Start () {
-	
+		DirectoryInfo dir = new DirectoryInfo("assets/json");
+		FileInfo[] info = dir.GetFiles("*.json");
+		foreach (FileInfo f in info)  {
+			StartCoroutine(createObjectFromJson("assets/json/" + f.Name, target));
+		}
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 
@@ -43,7 +54,7 @@ public class Controls : MonoBehaviour {
 			target.transform.Translate (0, 0, 5 * Time.deltaTime, Space.World);
 		}
 
-		transform.LookAt (new Vector3());
+		transform.LookAt (target.transform.position);
 
 		foreach (Touch touch in Input.touches) {
 
@@ -69,4 +80,91 @@ public class Controls : MonoBehaviour {
 
 		}
 	}
+
+	IEnumerator createObjectFromJson (string file_name, GameObject t) {
+
+		string fText = "";
+		string line;
+		StreamReader reader = new StreamReader(file_name, Encoding.Default);
+		
+		using (reader)
+		{
+			do
+			{
+				line = reader.ReadLine();
+				
+				if (line != null)
+				{
+					fText += line;
+				}
+			}
+			while (line != null);
+			
+			reader.Close();
+		}
+		
+		JSONArray geometries;
+		
+		try {
+			var jsonObject = JSON.Parse (fText);
+			geometries = (JSONArray) jsonObject ["geometries"];
+
+			foreach (JSONNode node in geometries) {
+				GameObject target = Instantiate(t);
+				
+				JSONArray f;
+				JSONArray v;
+				
+				try {
+					f = (JSONArray) node["data"]["faces"];
+					v = (JSONArray) node["data"]["vertices"];
+					
+					if (v.Count > 0 && f.Count > 0) {
+						Vector3 [] vertices = new Vector3[v.Count / 3];
+						int [] faces = new int[f.Count - (f.Count / 4)];
+						
+						int index = 0;
+						int count = 0;
+						do {
+							vertices [index++] = new Vector3 (
+								float.Parse ((string)v [count++]), 
+								float.Parse ((string)v [count++]), 
+								float.Parse ((string)v [count++])
+								);
+						} while (count < v.Count);
+						
+						index = 0;
+						count = 0;
+						do {
+							count++;
+							faces [index++] = int.Parse ((string)f [count++]);
+							faces [index++] = int.Parse ((string)f [count++]);
+							faces [index++] = int.Parse ((string)f [count++]);
+						} while (count < f.Count);
+						
+						Mesh mesh = new Mesh ();
+						
+						mesh.vertices = vertices;
+						
+						mesh.triangles = faces;
+						
+						mesh.RecalculateNormals ();
+						
+						target.GetComponent<MeshFilter> ().mesh = mesh;
+						
+					} else {
+						Destroy (target);
+					}
+				} catch (System.Exception e) {
+					Debug.Log (e.StackTrace);
+					Destroy (target);
+				}
+			}
+		} catch (System.Exception e) {
+			Debug.Log (e.StackTrace);
+		} 
+		
+		yield return null;
+	}
+
 }

@@ -283,7 +283,9 @@ namespace SimpleJSON
 			bool flag = false;
 			int integer = 0;
 			double real = 0;
-			
+
+			Console.WriteLine (token);
+
 			if (int.TryParse (token, out integer)) {
 				return new JSONData (integer);
 			}
@@ -307,6 +309,7 @@ namespace SimpleJSON
 				else
 					ctx.Add (tokenName, token); // assume dictionary/object
 			} else {
+				Console.WriteLine (token);
 				JSONData number = Numberize (token);
 				if (ctx is JSONArray)
 					ctx.Add (number);

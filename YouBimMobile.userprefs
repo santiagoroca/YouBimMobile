@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Controls.cs">
+    <Files>
+      <File FileName="Assets\Controls.cs" Line="103" Column="18" />
+      <File FileName="Assets\simpleJSON.cs" Line="322" Column="31" />
+      <File FileName="Assets\json\Wellington_Architecture.rvt.js_0d0a165a-e56a-4dab-98f8-06a4de34ad49-00079fa5_(291.083197370, 252.567236445, 113.000000000).js.json" Line="13" Column="1" />
+      <File FileName="Assets\json\Wellington_Architecture.rvt.js_1d8cfae2-8f5b-4061-8cd2-0bca55d73b67-0018e220_(259.742189708, 330.757090530, 102.000000000).json" Line="1" Column="18" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
