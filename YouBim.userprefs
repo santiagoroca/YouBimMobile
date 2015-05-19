@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\simpleJSON.cs.cs">
+    <Files>
+      <File FileName="Assets\Controls.cs" Line="39" Column="70" />
+      <File FileName="Assets\JsonParser.cs" Line="8" Column="13" />
+      <File FileName="Assets\simpleJSON.cs.cs" Line="1236" Column="2" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
